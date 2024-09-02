@@ -49,7 +49,7 @@ namespace m003_provide_api.Controllers
                 {
                     Directory.CreateDirectory("order");
                 }
-                System.IO.File.WriteAllText("order/" + order.OrderTrackingId.ToString() + ".txt", System.Text.Json.JsonSerializer.Serialize(order));
+                System.IO.File.WriteAllText(System.IO.Path.Combine("order", order.OrderTrackingId.ToString() + ".txt"), System.Text.Json.JsonSerializer.Serialize(order));
             }
             catch (Exception ex)
             {
@@ -67,7 +67,8 @@ namespace m003_provide_api.Controllers
         {
             try
             {
-                string fileName = "order/" + orderTrackingId.ToString() + ".txt";
+                //string fileName = "order/" + orderTrackingId.ToString() + ".txt";
+                string fileName = System.IO.Path.Combine("order", orderTrackingId.ToString() + ".txt");
                 if (!Directory.GetFiles("order").Any(a => a == fileName))
                 {
                     return BadRequest(new ErrorResponseDTO(Guid.NewGuid(), $"No such order:{orderTrackingId}"));
